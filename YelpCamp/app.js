@@ -1,6 +1,4 @@
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-}
+require('dotenv').config();
 
 const express = require('express'),
     session = require('express-session'),
@@ -64,6 +62,8 @@ passport.use(new localStrategy(User.authenticate())); // Local strategy method i
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 // serializeUser() and deserializeUser() are already added by passportLocalMongoose to User
+
+console.log(process.env.CLOUDINARY_CLOUD_NAME, process.env.CLOUDINARY_KEY, process.env.CLOUDINARY_SECRET);
 
 // Flash middleware
 app.use((req, res, next) => {
