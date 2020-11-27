@@ -18,7 +18,16 @@ const seedCamps = [
         price: Math.floor(Math.random() * 20) + 10,
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, amet!',
         location: 'Place A',
-        image: 'https://source.unsplash.com/collection/483251'
+        images: [
+            {
+              url: 'https://res.cloudinary.com/diko6sl68/image/upload/v1606094107/YelpCamp/f1vasnc2wdpvn5kamhm8.jpg',
+              filename: 'YelpCamp/f1vasnc2wdpvn5kamhm8'
+            },
+            {
+              url: 'https://res.cloudinary.com/diko6sl68/image/upload/v1606094107/YelpCamp/zpvqwchty06aaiiqg0fg.jpg',
+              filename: 'YelpCamp/zpvqwchty06aaiiqg0fg'
+            }
+          ]
     },
     {
         author: "5fb3211b82427114c001e993",
@@ -26,16 +35,32 @@ const seedCamps = [
         price: Math.floor(Math.random() * 20) + 10,
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, amet!',
         location: 'Place B',
-        image: 'https://source.unsplash.com/collection/483251'
-    },
+        images: [
+            {
+              url: 'https://res.cloudinary.com/diko6sl68/image/upload/v1606094107/YelpCamp/f1vasnc2wdpvn5kamhm8.jpg',
+              filename: 'YelpCamp/f1vasnc2wdpvn5kamhm8'
+            },
+            {
+              url: 'https://res.cloudinary.com/diko6sl68/image/upload/v1606094107/YelpCamp/zpvqwchty06aaiiqg0fg.jpg',
+              filename: 'YelpCamp/zpvqwchty06aaiiqg0fg'
+            }
+          ]    },
     {
         author: "5fb3211b82427114c001e993",
         title: 'Camp 3',
         price: Math.floor(Math.random() * 20) + 10,
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, amet!',
         location: 'Place C',
-        image: 'https://source.unsplash.com/collection/483251'
-    }
+        images: [
+            {
+              url: 'https://res.cloudinary.com/diko6sl68/image/upload/v1606094107/YelpCamp/f1vasnc2wdpvn5kamhm8.jpg',
+              filename: 'YelpCamp/f1vasnc2wdpvn5kamhm8'
+            },
+            {
+              url: 'https://res.cloudinary.com/diko6sl68/image/upload/v1606094107/YelpCamp/zpvqwchty06aaiiqg0fg.jpg',
+              filename: 'YelpCamp/zpvqwchty06aaiiqg0fg'
+            }
+          ]    }
 ];
 
 const seedDB = async () => {

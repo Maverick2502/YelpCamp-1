@@ -63,8 +63,6 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 // serializeUser() and deserializeUser() are already added by passportLocalMongoose to User
 
-console.log(process.env.CLOUDINARY_CLOUD_NAME, process.env.CLOUDINARY_KEY, process.env.CLOUDINARY_SECRET);
-
 // Flash middleware
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
