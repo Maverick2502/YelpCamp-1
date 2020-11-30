@@ -13,11 +13,13 @@ mongoose.connect('mongodb://localhost:27017/yelpcamp', {useNewUrlParser: true, u
 
 const seedCamps = [
     {
+        // Our user ID
         author: "5fb3211b82427114c001e993",
         title: 'Camp 1',
         price: Math.floor(Math.random() * 20) + 10,
+        geometry: { type: 'Point', coordinates: [ -122.3301, 47.6038 ] },
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, amet!',
-        location: 'Place A',
+        location: 'Seattle, Washington',
         images: [
             {
               url: 'https://res.cloudinary.com/diko6sl68/image/upload/v1606094107/YelpCamp/f1vasnc2wdpvn5kamhm8.jpg',
@@ -33,8 +35,9 @@ const seedCamps = [
         author: "5fb3211b82427114c001e993",
         title: 'Camp 2',
         price: Math.floor(Math.random() * 20) + 10,
+        geometry: { type: 'Point', coordinates: [ -122.3301, 47.6038 ] },
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, amet!',
-        location: 'Place B',
+        location: 'Seattle, Washington',
         images: [
             {
               url: 'https://res.cloudinary.com/diko6sl68/image/upload/v1606094107/YelpCamp/f1vasnc2wdpvn5kamhm8.jpg',
@@ -49,8 +52,9 @@ const seedCamps = [
         author: "5fb3211b82427114c001e993",
         title: 'Camp 3',
         price: Math.floor(Math.random() * 20) + 10,
+        geometry: { type: 'Point', coordinates: [ -122.3301, 47.6038 ] },
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, amet!',
-        location: 'Place C',
+        location: 'Seattle, Washington',
         images: [
             {
               url: 'https://res.cloudinary.com/diko6sl68/image/upload/v1606094107/YelpCamp/f1vasnc2wdpvn5kamhm8.jpg',

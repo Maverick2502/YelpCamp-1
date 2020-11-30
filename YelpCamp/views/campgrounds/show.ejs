@@ -63,6 +63,7 @@
       <div class="card-footer text-muted">2 days ago</div>
     </div>
   </div>
+  <div id="map" style="width: 400px; height: 300px"></div>
   <div class="col-6">
     <!-- Form to create new review for campground -->
     <% if (currentUser) { %>
@@ -132,3 +133,10 @@
     </div>
   </div>
 </div>
+
+<script>
+  const mapToken = "<%= process.env.MAPBOX_TOKEN %>";
+  const campground = <%- JSON.stringify(campground) %>;
+</script>
+
+<script src="/js/showPageMap.js"></script>
