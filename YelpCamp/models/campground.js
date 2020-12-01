@@ -11,6 +11,8 @@ imageSchema.virtual('thumbnail').get(function() {
     return this.url.replace('/upload', '/upload/w_200');
 }) // Virtual property that preps our image URL to show 200px images
 
+const opts = { toJSON: { virtuals: true } }; // Options to pass virtuals when converting schema to JSON
+
 const campgroundSchema = new Schema({
     title: String,
     images: [imageSchema],
@@ -37,6 +39,10 @@ const campgroundSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Review'
     }]
+}, opts);
+
+campgroundSchema.virtual('properties.popUpMarkup').get(function() {
+    return `<strong><a href="/campgrounds/${this._id}">${this.title}</a></strong>`;
 });
 
 // Middleware that runs after findByIdAndDelete() method is called for Campground documents

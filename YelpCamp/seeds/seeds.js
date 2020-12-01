@@ -35,9 +35,9 @@ const seedCamps = [
         author: "5fb3211b82427114c001e993",
         title: 'Camp 2',
         price: Math.floor(Math.random() * 20) + 10,
-        geometry: { type: 'Point', coordinates: [ -122.3301, 47.6038 ] },
+        geometry: { type: 'Point', coordinates: [ -110.3626, 46.8797 ] },
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, amet!',
-        location: 'Seattle, Washington',
+        location: 'Orlando, Montana',
         images: [
             {
               url: 'https://res.cloudinary.com/diko6sl68/image/upload/v1606094107/YelpCamp/f1vasnc2wdpvn5kamhm8.jpg',
@@ -52,9 +52,9 @@ const seedCamps = [
         author: "5fb3211b82427114c001e993",
         title: 'Camp 3',
         price: Math.floor(Math.random() * 20) + 10,
-        geometry: { type: 'Point', coordinates: [ -122.3301, 47.6038 ] },
+        geometry: { type: 'Point', coordinates: [ 144.9631, -37.8136 ] },
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, amet!',
-        location: 'Seattle, Washington',
+        location: 'Melbourne, Victoria',
         images: [
             {
               url: 'https://res.cloudinary.com/diko6sl68/image/upload/v1606094107/YelpCamp/f1vasnc2wdpvn5kamhm8.jpg',
@@ -69,9 +69,11 @@ const seedCamps = [
 
 const seedDB = async () => {
     await Campground.deleteMany({});
-    Campground.insertMany(seedCamps)
+    for (let i = 0; i < 50; i++ ) {
+      Campground.insertMany(seedCamps)
         .then(res => (console.log(res)))
         .catch(err => (console.log(err)));
+    }
 }
 
 seedDB();
