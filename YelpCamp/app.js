@@ -1,3 +1,7 @@
+// if (process.env.NODE_ENV !== 'production') {
+//     require('dotenv').config();
+// }
+
 require('dotenv').config();
 
 const express = require('express'),
@@ -9,6 +13,8 @@ const express = require('express'),
     path = require('path'),
     passport = require('passport'),
     localStrategy = require('passport-local'),
+    helmet = require('helmet'),
+    mongoSanitize = require('express-mongo-sanitize'),
     ExpressError = require('./utils/ExpressError'),
     app = express(),
     campgroundRoutes = require('./routes/campgrounds'),
@@ -41,20 +47,71 @@ app.set('views', path.join(__dirname, 'views')); // Set default path for views t
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method')); // Enable method overriding for PUT and DELETE requests
 app.use(express.static(path.join(__dirname, 'public'))); // Prep static assets at public
+app.use(mongoSanitize()); // Sanitize inputs to prevent SQL injections
 
 const sessionConfig = {
+    name: 'session',
     secret: 'replacewithbettersecret',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: true, 
     cookie: {
-        httpOnly: true, // For security measures
+        httpOnly: true, // For security measures; sessions only accessible through HTTP
+        // secure: true,
         expires: Date.now() * 1000 * 60 * 60 * 24 * 7, // Set cookie to expire in a week (time is in ms)
         maxAge: 1000 * 60 * 60 * 24 * 7,
     },
 } // Options for session setup
+
 app.use(session(sessionConfig));
 app.use(flash());
 
+// Permitted URLs to obtain content from
+const scriptSrcUrls = [
+    "https://stackpath.bootstrapcdn.com/",
+    "https://api.tiles.mapbox.com/",
+    "https://api.mapbox.com/",
+    "https://kit.fontawesome.com/",
+    "https://cdnjs.cloudflare.com/",
+    "https://cdn.jsdelivr.net",
+];
+const styleSrcUrls = [
+    "https://kit-free.fontawesome.com/",
+    "https://stackpath.bootstrapcdn.com/",
+    "https://api.mapbox.com/",
+    "https://api.tiles.mapbox.com/",
+    "https://fonts.googleapis.com/",
+    "https://use.fontawesome.com/",
+];
+const connectSrcUrls = [
+    "https://api.mapbox.com/",
+    "https://a.tiles.mapbox.com/",
+    "https://b.tiles.mapbox.com/",
+    "https://events.mapbox.com/",
+];
+
+const fontSrcUrls = [];
+
+// Sets various HTTP headers to secure our app from stuff like clickjacking
+app.use(
+    helmet.contentSecurityPolicy({ // Define CSP to define permitted URLs to retrieve data from
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/`, //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
+                "https://images.unsplash.com/",
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+        },
+    })
+);
 app.use(passport.initialize());
 app.use(passport.session()); // Enables persistent login sessions
 passport.use(new localStrategy(User.authenticate())); // Local strategy method is to use authenticate() method from User
