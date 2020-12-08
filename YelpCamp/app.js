@@ -2,6 +2,8 @@
 //     require('dotenv').config();
 // }
 
+const { MongoStore } = require('connect-mongo');
+
 require('dotenv').config();
 
 const express = require('express'),
@@ -15,15 +17,17 @@ const express = require('express'),
     localStrategy = require('passport-local'),
     helmet = require('helmet'),
     mongoSanitize = require('express-mongo-sanitize'),
+    MongoDBStore = require('connect-mongo')(session),
     ExpressError = require('./utils/ExpressError'),
     app = express(),
     campgroundRoutes = require('./routes/campgrounds'),
     reviewRoutes = require('./routes/reviews'),
     userRoutes = require('./routes/users');    
-    User = require('./models/user');
+    User = require('./models/user'),
+    dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelpcamp';
 
 // Code connecting to mongodb
-mongoose.connect('mongodb://localhost:27017/yelpcamp', 
+mongoose.connect(dbUrl, 
 {
     useNewUrlParser: true, 
     useUnifiedTopology: true,
@@ -49,9 +53,22 @@ app.use(methodOverride('_method')); // Enable method overriding for PUT and DELE
 app.use(express.static(path.join(__dirname, 'public'))); // Prep static assets at public
 app.use(mongoSanitize()); // Sanitize inputs to prevent SQL injections
 
+const secret = process.env.SECRET || 'replacewithbettersecret'
+
+const store = new MongoDBStore({ // Mongo store to store our sessions
+    url: dbUrl,
+    secret,
+    touchAfter: 24 * 3600, // To ensure we don't resave our sessions whenever user refreshes page; resaves after 24 * 3600s
+});
+
+store.on('error', function (e) {
+    console.log('Session Store error', e)
+}); // Log errors
+
 const sessionConfig = {
+    store,
     name: 'session',
-    secret: 'replacewithbettersecret',
+    secret,
     resave: false,
     saveUninitialized: true, 
     cookie: {
