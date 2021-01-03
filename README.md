@@ -13,3 +13,6 @@
  Then, run `nodemon` or `node app.js` to start the server.
 
  Access through http://localhost:3000/
+ 
+ ## UPDATE:
+ The app has been deployed with Heroku, and can be accessed through https://yelpcampsutinah.herokuapp.com/.
